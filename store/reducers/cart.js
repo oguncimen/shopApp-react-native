@@ -1,4 +1,6 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/cart";
+import { ADD_ORDER } from "../actions/orders";
+
 import CartItem from "../../models/cart-item";
 
 const initialState = {
@@ -47,7 +49,14 @@ export default (state = initialState, action) => {
         updatedCartItems = { ...state.items };
         delete updatedCartItems[action.pid];
       }
-      return {...state,items:updatedCartItems,totalAmount:state.totalAmount - selectedCartItem.productPrice}
+      return {
+        ...state,
+        items: updatedCartItems,
+        totalAmount: state.totalAmount - selectedCartItem.productPrice,
+      };
+    //Orders reducer'ından ->Sipariş verilince initial state'i dönüyoruz yani boş items ve totalAmoyunt
+    case ADD_ORDER:
+      return initialState;
   }
   return state;
 };

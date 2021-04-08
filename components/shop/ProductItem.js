@@ -30,12 +30,13 @@ const ProductItem = (props) => {
             </View>
             <View style={styles.actions}>
               <Button
+               style={styles.buttons}
                 color={Colors.primary}
                 title="View Details"
                 onPress={props.onViewDetail}
               ></Button>
               <Button
-                color={Colors.primary}
+               color={Colors.primary}
                 title="To Cart"
                 onPress={props.onAddToCart}
               ></Button>
@@ -58,9 +59,12 @@ const styles = StyleSheet.create({
     height: 300,
     margin: 20,
   },
+  buttons:{
+    borderRadius:10,borderWidth: 1,  borderColor: '#fff'
+  },
   touchable: {
     overflow:'hidden',
-    borderRadius:10
+    borderRadius:10,
   },
   image: {
     width: "100%",

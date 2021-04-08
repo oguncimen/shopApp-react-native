@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const defaultNavOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
+    backgroundColor: Platform.OS === 'android' ? 'white' : ''
   },
   headerTitleStyle: {
     fontFamily: 'open-sans-bold'
@@ -21,7 +21,7 @@ const defaultNavOptions = {
   headerBackTitleStyle: {
     fontFamily: 'open-sans'
   },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary
+  headerTintColor: Platform.OS === 'android' ? Colors.primary : Colors.primary
 };
 
 const ProductsNavigator = createStackNavigator(
