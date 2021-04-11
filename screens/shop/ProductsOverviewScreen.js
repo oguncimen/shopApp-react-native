@@ -18,13 +18,16 @@ import Colors from "../../constant/Colors";
 
 const ProductsOverviewScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const products = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
   const loadProducts = useCallback(async () => {
-    setIsLoading(true);
+    setIsRefreshing(true);
     await dispatch(productActions.fetchProducts());
     setIsLoading(false);
+    setIsRefreshing(false);
   },isLoading);
 
 
@@ -40,9 +43,12 @@ const ProductsOverviewScreen = (props) => {
   }, [loadProducts]);
 
   useEffect(() => {
+    setIsLoading(true);
     
-    loadProducts();
-  }, [dispatch]);
+    loadProducts().then(()=>{
+      setIsLoading(false);
+    });
+  }, [dispatch,loadProducts]);
 
   const selectItemHandler = (id, title) => {
     props.navigation.navigate("ProductDetail", {
@@ -68,8 +74,11 @@ const ProductsOverviewScreen = (props) => {
     );
   }
   return (
+    
     <FlatList
-      data={products}
+    onRefresh={loadProducts}
+    refreshing={isRefreshing}
+    data={products}
       keyExtractor={(item) => item.id}
       renderItem={(itemData) => (
         <ProductItem
