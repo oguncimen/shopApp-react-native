@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet,LogBox } from "react-native";
-import { createStore, combineReducers } from "redux";
+import { StyleSheet, LogBox } from "react-native";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import ReduxThunk from "redux-thunk";
 import { Provider } from "react-redux";
 import ShopNavigator from "./navigation/ShopNavigator";
 import productsReducer from "./store/reducers/products";
@@ -8,21 +9,20 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/orders";
-
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 // Ignore all log notifications:
 LogBox.ignoreAllLogs();
 //remove before deploy
-import { composeWithDevTools } from "redux-devtools-extension";
+//import { composeWithDevTools } from "redux-devtools-extension";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
   orders: ordersReducer,
 });
-
-
-const store = createStore(rootReducer, composeWithDevTools());
+const composedEnhancer = composeWithDevTools(applyMiddleware(ReduxThunk))
+const store = createStore(rootReducer, composedEnhancer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
