@@ -11,7 +11,7 @@ import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/orders";
 import { composeWithDevTools } from "redux-devtools-extension";
 import authReducer from "./store/reducers/auth";
-
+import NavigationContainer from "./navigation/NavigationContainer";
 // Ignore all log notifications:
 LogBox.ignoreAllLogs();
 //remove before deploy
@@ -46,7 +46,7 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <ShopNavigator></ShopNavigator>
+     <NavigationContainer></NavigationContainer>
     </Provider>
   );
 }
