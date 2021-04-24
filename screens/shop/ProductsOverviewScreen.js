@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   View,
   StyleSheet,
+  Text
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -28,7 +29,7 @@ const ProductsOverviewScreen = (props) => {
     await dispatch(productActions.fetchProducts());
     setIsLoading(false);
     setIsRefreshing(false);
-  },isLoading);
+  },[]);
 
 
   useEffect(() => {

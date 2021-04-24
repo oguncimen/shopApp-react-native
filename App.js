@@ -9,7 +9,8 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import cartReducer from "./store/reducers/cart";
 import ordersReducer from "./store/reducers/orders";
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from "redux-devtools-extension";
+import authReducer from "./store/reducers/auth";
 
 // Ignore all log notifications:
 LogBox.ignoreAllLogs();
@@ -20,8 +21,9 @@ const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
   orders: ordersReducer,
+  auth: authReducer,
 });
-const composedEnhancer = composeWithDevTools(applyMiddleware(ReduxThunk))
+const composedEnhancer = composeWithDevTools(applyMiddleware(ReduxThunk));
 const store = createStore(rootReducer, composedEnhancer);
 
 const fetchFonts = () => {

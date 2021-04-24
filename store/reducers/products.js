@@ -8,8 +8,8 @@ import {
 } from "../actions/products";
 
 const initialState = {
-  availableProducts: PRODUCTS,
-  userProducts: PRODUCTS.filter((prod) => prod.ownerId === "u1"),
+  availableProducts: [],
+  userProducts: [],
 };
 
 export default (state = initialState, action) => {
@@ -17,12 +17,12 @@ export default (state = initialState, action) => {
     case SET_PRODUCTS:
       return {
         availableProducts: action.products,
-        userProducts: action.products.filter((prod) => prod.ownerId === "u1"),
+        userProducts: action.userProducts,
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.productdata.id,
-        "u1",
+        action.productdata.ownerId,
         action.productdata.title,
         action.productdata.imageUrl,
         action.productdata.description,
@@ -35,25 +35,23 @@ export default (state = initialState, action) => {
       };
     case UPDATE_PRODUCT:
       const productIndex = state.userProducts.findIndex(
-        (prod) => prod.id == action.pid
+        (prod) => prod.id === action.pid
       );
-
-      const updateProduct = new Product(
+      const updatedProduct = new Product(
         action.pid,
         state.userProducts[productIndex].ownerId,
-        action.productdata.title,
-        action.productdata.imageUrl,
-        action.productdata.description,
+        action.productData.title,
+        action.productData.imageUrl,
+        action.productData.description,
         state.userProducts[productIndex].price
       );
       const updatedUserProducts = [...state.userProducts];
-      //State içindeki userProducts'in product index'ine ait index'te bulunan product ile yeni product'ı değiştiriyoruz
-      updatedUserProducts[productIndex] = updateProduct;
+      updatedUserProducts[productIndex] = updatedProduct;
       const availableProductIndex = state.availableProducts.findIndex(
         (prod) => prod.id === action.pid
       );
       const updatedAvailableProducts = [...state.availableProducts];
-      updatedAvailableProducts[availableProductIndex] = updateProduct;
+      updatedAvailableProducts[availableProductIndex] = updatedProduct;
       return {
         ...state,
         availableProducts: updatedAvailableProducts,
